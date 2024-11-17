@@ -65,8 +65,30 @@ $superheroes = [
 
 ?>
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+<?php 
+if ($_SERVER["REQUEST_METHOD"] == "GET"){
+    $result;
+    $cleanedReq = ucwords(trim(filter_var($_GET["query"], FILTER_SANITIZE_STRING)));
+    if (isset($cleanedReq) && !empty($cleanedReq)){
+        for($sup=0; $sup < count($superheroes); $sup++){
+            if (  $superheroes[$sup]['name'] == $cleanedReq  ||  $superheroes[$sup]['alias']  == $cleanedReq ) {
+                $result = "<h3> {$superheroes[$sup]['alias']} </h3> <h4> A.K.A {$superheroes[$sup]['name']} </h4> <p>{$superheroes[$sup]['biography']} </p>";
+                break;
+            }
+            else{
+                $result= "<span>Superhero not found </span>";
+            }
+        }
+        echo $result;
+    }
+    else{?>
+
+            <ul>
+            <?php foreach ($superheroes as $superhero): ?>
+            <li><?= $superhero['alias']; ?></li>
+            <?php endforeach; ?>
+            </ul
+        
+    <?php }?>
+
+<?php } ?>
