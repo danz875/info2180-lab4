@@ -14,7 +14,6 @@ window.addEventListener('load', ()=>{
         fetch(cleanUrl, {method : 'GET'})
         .then(resp => resp.text())
         .then(elements => {
-            alert(elements);
             let h3El = document.createElement("h3");
             let h3Text = document.createTextNode("RESULT");
             h3El.appendChild(h3Text);
